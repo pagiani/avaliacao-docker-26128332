@@ -1,6 +1,6 @@
 # Respostas · Avaliação Prática de Docker · Cooperativa AgroVale (Turma A)
 
-Nome: SEU NOME COMPLETO AQUI
+Nome: Kauan Sampaio
 Matrícula: 26128332
 Usuário do GitHub: pagiani
 Usuário do Docker Hub: kawan7
