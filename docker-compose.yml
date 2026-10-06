@@ -1,0 +1,45 @@
+services:
+  portal:
+    image: ${DOCKERHUB_USER}/agrovale-portal:1.0-${MATRICULA}
+    restart: unless-stopped
+    ports:
+      - "8032:80"
+    networks:
+      - agrovale-net
+
+  db:
+    image: mariadb:11.4
+    restart: unless-stopped
+    environment:
+      MARIADB_DATABASE: ${MARIADB_DATABASE}
+      MARIADB_USER: ${MARIADB_USER}
+      MARIADB_PASSWORD: ${MARIADB_PASSWORD}
+      MARIADB_ROOT_PASSWORD: ${MARIADB_ROOT_PASSWORD}
+    volumes:
+      - db_data:/var/lib/mysql
+    networks:
+      - agrovale-net
+
+  blog:
+    image: wordpress:6-apache
+    restart: unless-stopped
+    depends_on:
+      - db
+    environment:
+      WORDPRESS_DB_HOST: db
+      WORDPRESS_DB_NAME: ${MARIADB_DATABASE}
+      WORDPRESS_DB_USER: ${MARIADB_USER}
+      WORDPRESS_DB_PASSWORD: ${MARIADB_PASSWORD}
+    ports:
+      - "9032:80"
+    volumes:
+      - blog_data:/var/www/html
+    networks:
+      - agrovale-net
+
+volumes:
+  db_data:
+  blog_data:
+
+networks:
+  agrovale-net:
